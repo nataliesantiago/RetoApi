@@ -8,10 +8,8 @@ import _ from 'lodash';
 var router = express.Router();
 
 router.post('/create-user', async (req, res) =>  {
-  console.log("body",req.body)
   let birthDay  = new moment(req.body.birthDay, 'DD-MM-YYYY');
   let user = new userModel({...req.body, birthDay});
-  console.log("user",user)
   try {
     await user.save();
   } catch (error) {
@@ -93,7 +91,7 @@ router.get('/get-user/:id', async (req, res) =>  {
 
 router.post('/search-hobbie-user', async (req, res) =>  {
   let regexName = new RegExp(req.body.firstName);
-  let regexLast = new RegExp(req.body.lasttName);
+  let regexLast = new RegExp(req.body.lastName);
   let findUser = await userModel.find({firstName: { $regex: regexName }, lastName: { $regex: regexLast }})
                         .populate({path: 'hobbies'});
   res.send({
@@ -114,11 +112,11 @@ router.post('/search-hobbie/:id', async (req, res) =>  {
 
 router.post('/search-user', async (req, res) =>  {
   let regexName = new RegExp(req.body.firstName);
-  let regexLast = new RegExp(req.body.lasttName);
+  let regexLast = new RegExp(req.body.lastName);
   let findUser = await userModel.find({firstName: { $regex: regexName }, lastName: { $regex: regexLast }});
   res.send({
     success: true,
-    message: 'user successful!',
+    message: 'user find!',
     data: findUser
   });
 });
