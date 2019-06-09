@@ -30,7 +30,6 @@ var UserSchema = Schema({
         type: 'ObjectId',
         ref: 'Hobbie'
     }]
-
 });
 
 UserSchema.pre('save', async function() {
